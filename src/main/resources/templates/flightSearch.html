@@ -2,9 +2,47 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Getting Started: Serving Web Content</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-<p th:text = "'Welcome to TWAirline'"/>
+<p th:text="'Welcome to Airline Booking'"/>
+<table style="width:100%">
+
+    <form action="search" method="get">
+        <div>
+            <select id="fromDropDown" name="fromDropDown">
+                <option value="">Select Source</option>
+                <option th:each="entry : ${airportAdmin.getFlightManager().getFlightsList()}"
+                        th:value="${entry.getValue().getFrom()}"
+                        th:text="${entry.getValue().getFrom()}"></option>
+            </select>
+            <select id="toDropDown" name="toDropDown">
+                <option value="">Select Destination</option>
+                <option th:each="entry : ${airportAdmin.getFlightManager().getFlightsList()}"
+                        th:value="${entry.getValue().getTo()}"
+                        th:text="${entry.getValue().getTo()}"></option>
+            </select>
+        </div>
+        <input type="submit" value="Submit"/>
+    </form>
+    <!--Populate the table with flight details using Map -->
+    <div th:if="${searchResultsAvailable} == true">
+        <tr>
+            <th>Flight Number</th>
+            <th>From</th>
+            <th>To</th>
+        </tr>
+        <tr th:each="flight : ${searchResults}">
+            <td th:text="${flight.getFlightNumber()}"></td>
+            <td th:text="${flight.getFrom()}"></td>
+            <td th:text="${flight.getTo()}"></td>
+        </tr>
+
+    </div>
+    <div th:if="${searchResultsAvailable} == false">
+        <p> No search results found.</p>
+    </div>
+</table>
+
 </body>
 </html>
