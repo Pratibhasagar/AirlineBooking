@@ -1,22 +1,20 @@
 package airline.repositories;
 import airline.models.City;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class CityRepository {
-    private static final CityRepository sharedInstance = new CityRepository();
     private static List<City> cities;
 
-    private CityRepository() {
+    public CityRepository() {
         cities = new ArrayList<City>();
+        createDefaultCities();
     }
 
-    public static CityRepository getSharedInstance() {
-        return sharedInstance;
-    }
-
-    public void createDefaultCities() {
+    private void createDefaultCities() {
         cities.add(new City("HYD", "Hyderabad"));
         cities.add(new City("BLR", "Bengaluru"));
         cities.add(new City("PUN", "Pune"));

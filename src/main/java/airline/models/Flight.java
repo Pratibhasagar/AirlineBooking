@@ -4,15 +4,19 @@ public class Flight {
     private String flightNumber;
     private String source;
     private String destination;
+    private int totalSeats;
+    private int availableSeats;
 
     public Flight() {
 
     }
 
-    public Flight(String flightNumber, String source, String destination) {
+    public Flight(String flightNumber, String source, String destination, int totalSeats) {
         this.flightNumber = flightNumber;
         this.source = source;
         this.destination = destination;
+        this.totalSeats = totalSeats;
+        this.availableSeats = totalSeats;
     }
 
     public String getFlightNumber() {
@@ -37,5 +41,9 @@ public class Flight {
 
     public void setDestination(String destination) {
         this.destination = destination;
+    }
+
+    public int getAvailableSeats() {
+        return availableSeats;
     }
 }

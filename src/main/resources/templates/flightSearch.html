@@ -5,7 +5,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-<p th:text="'Welcome to TWAirline'"/>
+<p th:text="'Welcome to TW Airlines'"/>
+
+<!--Input from the user-->
 <form method="post" action="#" th:action="@{/search}" th:object="${searchCriteria}">
     <p th:text="'Source: '"/>
     <select title="Source" class="form-control" id="source" name="source" th:field="*{source}">
@@ -24,7 +26,33 @@
         >
         </option>
     </select>
+    <input type="text" name="Number Of Passengers" min="1" placeholder="Minimum 1" required="required" th:field="*{numberOfPassengers}"/>
     <input type="submit" value="Submit"/>
 </form>
+
+<!--Display the flight search results-->
+<div th:if="${foundResults} == true">
+    <p th:text="'Flight Search Results'"/>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Flight Id</th>
+            <th>Source</th>
+            <th>Destination</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="flight : ${searchResults}">
+            <td th:text="${flight.flightNumber}"/>
+            <td th:text="${flight.source}"/>
+            <td th:text="${flight.destination}"/>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div th:if="${foundResults} == false">
+    <p>No flights found</p>
+</div>
 </body>
 </html>
