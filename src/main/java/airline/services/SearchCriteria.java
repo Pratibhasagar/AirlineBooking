@@ -1,9 +1,20 @@
 package airline.services;
 
 public class SearchCriteria {
-    public String source;
-    public String destination;
-    public int numberOfPassengers;
+    private String source;
+    private String destination;
+    private int numberOfPassengers;
+    private String date;
+
+    public SearchCriteria() {
+    }
+
+    public SearchCriteria(String source, String destination, int numberOfPassengers, String date) {
+        this.source = source;
+        this.destination = destination;
+        this.numberOfPassengers = numberOfPassengers;
+        this.date = date;
+    }
 
     public void setSource(String source) {
         this.source = source;
@@ -17,14 +28,8 @@ public class SearchCriteria {
         this.numberOfPassengers = numberOfPassengers;
     }
 
-    public SearchCriteria() {
-
-    }
-
-    public SearchCriteria(String source, String destination, int numberOfPassengers) {
-        this.source = source;
-        this.destination = destination;
-        this.numberOfPassengers = numberOfPassengers;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getSource() {
@@ -38,4 +43,10 @@ public class SearchCriteria {
     public int getNumberOfPassengers() {
         return numberOfPassengers;
     }
+
+    public String getDate() {
+        return date;
+    }
+
+
 }

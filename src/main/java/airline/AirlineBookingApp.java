@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class AirlineBookingApp {
-    public static void main(String []args) {
-        SpringApplication.run(AirlineBookingApp.class,args);
+    public static void main(String[] args) {
+        SpringApplication.run(AirlineBookingApp.class, args);
     }
 }

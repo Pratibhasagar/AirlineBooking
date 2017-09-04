@@ -5,40 +5,69 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-<p th:text="'Welcome to TW Airlines'"/>
+<h2 th:text="'Welcome to TW Airlines'"/>
 
 <!--Input from the user-->
 <form method="post" action="#" th:action="@{/search}" th:object="${searchCriteria}">
-    <p th:text="'Source: '"/>
-    <select title="Source" class="form-control" id="source" name="source" th:field="*{source}">
-        <option value="">Select Source</option>
-        <option th:each="city : ${cities}"
-                th:value="${city.id}"
-                th:text="${city.name}">
-        </option>
-    </select>
-    <p th:text="'Destination: '"/>
-    <select class="form-control" id="destination" name="destination" th:field="*{destination}">
-        <option value="">Select Destination</option>
-        <option th:each="city : ${cities}"
-                th:value="${city.id}"
-                th:text="${city.name}"
-        >
-        </option>
-    </select>
-    <input type="text" name="Number Of Passengers" min="1" placeholder="Minimum 1" required="required" th:field="*{numberOfPassengers}"/>
-    <input type="submit" value="Submit"/>
+    <table>
+        <tr>
+            <td>
+                <p th:text="'Source: '"/>
+            </td>
+            <td>
+                <select title="Source" class="form-control" id="source" name="source" th:field="*{source}">
+                    <option value="">Select Source</option>
+                    <option th:each="city : ${cities}"
+                            th:value="${city.id}"
+                            th:text="${city.name}">
+                    </option>
+
+                </select>
+            </td>
+            <td>
+                <p th:text="'Destination: '"/>
+            </td>
+            <td>
+                <select class="form-control" id="destination" name="destination" th:field="*{destination}">
+                    <option value="">Select Destination</option>
+                    <option th:each="city : ${cities}"
+                            th:value="${city.id}"
+                            th:text="${city.name}"
+                    >
+                    </option>
+                </select>
+            </td>
+            <td>
+                <p th:text="'Number Of Passengers'"/>
+            </td>
+            <td>
+                <input type="text" name="Number Of Passengers" min="1" required="required"
+                       th:field="*{numberOfPassengers}"/>
+            </td>
+            <td>
+                <p th:text="'Departure On'"/>
+            </td>
+            <td>
+                <input id="date" type="date" th:field="*{date}"/>
+            </td>
+            <td>
+                <input type="submit" value="Submit"/>
+            </td>
+
+        </tr>
+    </table>
 </form>
 
 <!--Display the flight search results-->
 <div th:if="${foundResults} == true">
-    <p th:text="'Flight Search Results'"/>
+    <h2 th:text="'Flight Search Results'"/>
     <table border="1">
         <thead>
         <tr>
             <th>Flight Id</th>
             <th>Source</th>
             <th>Destination</th>
+            <th>Departure Date</th>
         </tr>
         </thead>
 
@@ -47,12 +76,13 @@
             <td th:text="${flight.flightNumber}"/>
             <td th:text="${flight.source}"/>
             <td th:text="${flight.destination}"/>
+            <td th:text="${flight.dateOfDeparture}"/>
         </tr>
         </tbody>
     </table>
 </div>
 <div th:if="${foundResults} == false">
-    <p>No flights found</p>
+    <h2 th:text="'No Flights Found'"/>
 </div>
 </body>
 </html>
