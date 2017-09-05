@@ -36,8 +36,7 @@ public class FlightSearchController {
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public String getFlights(@ModelAttribute(value = "searchCriteria") SearchCriteria searchCriteria, Model model) {
         boolean foundResults = false;
-        List<Flight> matchedFlights = flightSearchService.search(searchCriteria.getSource(),
-                searchCriteria.getDestination(), searchCriteria.getNumberOfPassengers(),searchCriteria.getDate());
+        List<Flight> matchedFlights = flightSearchService.search(searchCriteria);
         model.addAttribute("searchResults", matchedFlights);
         if (matchedFlights.size() > 0) {
             foundResults = true;

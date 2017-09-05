@@ -15,14 +15,14 @@ public class FlightSearchService {
     @Autowired
     FlightRepository flightRepository;
 
-    public List<Flight> search(String source, String destination, int requestedSeats, String dateOfDeparture) {
+    public List<Flight> search(SearchCriteria searchCriteria) {
         availableFlights = new ArrayList<Flight>();
 
         for (Flight flight : flightRepository.getFlights()) {
-            if (sourceCriteriaMatches(source, flight) &&
-                    destinationCriteriaMatches(destination, flight) &&
-                    seatsCriteriaMatches(requestedSeats, flight) &&
-                    dateOfDepartureCriteriaMatches(dateOfDeparture, flight)) {
+            if (sourceCriteriaMatches(searchCriteria.getSource(), flight) &&
+                    destinationCriteriaMatches(searchCriteria.getDestination(), flight) &&
+                    seatsCriteriaMatches(searchCriteria.getNumberOfPassengers(), flight) &&
+                    dateOfDepartureCriteriaMatches(searchCriteria.getDate(), flight)) {
                 availableFlights.add(flight);
             }
         }
