@@ -1,5 +1,6 @@
 package airline.services;
 
+import airline.models.TravelClassType;
 import airline.models.Flight;
 import airline.repositories.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class FlightSearchService {
         for (Flight flight : flightRepository.getFlights()) {
             if (sourceCriteriaMatches(searchCriteria.getSource(), flight) &&
                     destinationCriteriaMatches(searchCriteria.getDestination(), flight) &&
-                    seatsCriteriaMatches(searchCriteria.getNumberOfPassengers(), flight) &&
+                    seatsCriteriaMatches(searchCriteria.getTravelClassType(), searchCriteria.getNumberOfPassengers(), flight) &&
                     dateOfDepartureCriteriaMatches(searchCriteria.getDate(), flight)) {
                 availableFlights.add(flight);
             }
@@ -40,11 +41,8 @@ public class FlightSearchService {
         return criteriaMatch;
     }
 
-    private boolean seatsCriteriaMatches(int requestedSeats, Flight flight) {
-        if (requestedSeats == 0) {
-            requestedSeats = 1;
-        }
-        return (requestedSeats <= flight.getAvailableSeats());
+    private boolean seatsCriteriaMatches(TravelClassType travelClass, int requestedSeats, Flight flight) {
+        return (requestedSeats <= flight.getAirplane().getAvailableSeatsForClass(travelClass));
     }
 
     private boolean destinationCriteriaMatches(String destination, Flight flight) {

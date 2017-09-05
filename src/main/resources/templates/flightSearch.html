@@ -15,7 +15,8 @@
                 <p th:text="'Source: '"/>
             </td>
             <td>
-                <select title="Source" class="form-control" id="source" name="source" th:field="*{source}">
+                <select title="Source" class="form-control" id="source" name="source" required="required"
+                        th:field="*{source}">
                     <option value="">Select Source</option>
                     <option th:each="city : ${cities}"
                             th:value="${city.id}"
@@ -28,7 +29,8 @@
                 <p th:text="'Destination: '"/>
             </td>
             <td>
-                <select class="form-control" id="destination" name="destination" th:field="*{destination}">
+                <select class="form-control" id="destination" name="destination" required="required"
+                        th:field="*{destination}">
                     <option value="">Select Destination</option>
                     <option th:each="city : ${cities}"
                             th:value="${city.id}"
@@ -37,6 +39,8 @@
                     </option>
                 </select>
             </td>
+        </tr>
+        <tr>
             <td>
                 <p th:text="'Number Of Passengers'"/>
             </td>
@@ -44,6 +48,22 @@
                 <input type="text" name="Number Of Passengers" min="1" required="required"
                        th:field="*{numberOfPassengers}"/>
             </td>
+            <td>
+                <p th:text="'Class of Travel'"/>
+            </td>
+            <td>
+                <select class="form-control" id="travelClassType" name="destination" required="required"
+                        th:field="*{travelClassType}">
+                    <option value="">Select Class of Travel</option>
+                    <option th:each="travelClass : ${T(airline.models.TravelClassType).values()}"
+                            th:value="${travelClass}"
+                            th:text="${travelClass}"
+                    >
+                    </option>
+                </select>
+            </td>
+        </tr>
+        <tr>
             <td>
                 <p th:text="'Departure On'"/>
             </td>
@@ -64,19 +84,21 @@
     <table border="1">
         <thead>
         <tr>
-            <th>Flight Id</th>
             <th>Source</th>
             <th>Destination</th>
+            <th>Airplane</th>
+            <th>Flight Id</th>
             <th>Departure Date</th>
         </tr>
         </thead>
 
         <tbody>
         <tr th:each="flight : ${searchResults}">
-            <td th:text="${flight.flightNumber}"/>
             <td th:text="${flight.source}"/>
             <td th:text="${flight.destination}"/>
-            <td th:text="${flight.dateOfDeparture}"/>
+            <td th:text="${flight.getAirplane().getAirplaneInfo()}"/>
+            <td th:text="${flight.flightNumber}"/>
+            <td th:text="${T(java.time.ZonedDateTime).parse(flight.dateOfDeparture).toLocalDate().toString()}"/>
         </tr>
         </tbody>
     </table>

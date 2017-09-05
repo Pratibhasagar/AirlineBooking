@@ -4,21 +4,15 @@ public class Flight {
     private String flightNumber;
     private String source;
     private String destination;
-    private int totalSeats;
-    private int availableSeats;
     private String dateOfDeparture;
+    private Airplane airplane;
 
-    public Flight() {
-
-    }
-
-    public Flight(String flightNumber, String source, String destination, int totalSeats, String date) {
+    public Flight(String flightNumber, String source, String destination,String date, Airplane airplane) {
         this.flightNumber = flightNumber;
         this.source = source;
         this.destination = destination;
-        this.totalSeats = totalSeats;
-        this.availableSeats = totalSeats;
         this.dateOfDeparture = date;
+        this.airplane = airplane;
     }
 
     public String getFlightNumber() {
@@ -45,15 +39,18 @@ public class Flight {
         this.destination = destination;
     }
 
-    public int getAvailableSeats() {
-        return availableSeats;
-    }
-
     public String getDateOfDeparture() {
         return dateOfDeparture;
     }
 
     public void setDateOfDeparture(String datetime) {
         this.dateOfDeparture = datetime;
+    }
+
+    public Airplane getAirplane() {
+        return airplane;
+    }
+    public void setAirplane(Airplane airplane) {
+        this.airplane = airplane;
     }
 }

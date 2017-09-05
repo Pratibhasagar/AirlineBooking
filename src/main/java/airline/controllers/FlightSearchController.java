@@ -2,9 +2,10 @@ package airline.controllers;
 
 import airline.models.City;
 import airline.models.Flight;
-import airline.services.SearchCriteria;
+import airline.models.TravelClassType;
 import airline.repositories.CityRepository;
 import airline.services.FlightSearchService;
+import airline.services.SearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +30,7 @@ public class FlightSearchController {
     public String getCities(Model model) {
         List<City> cities = cityRepository.getCities();
         model.addAttribute("cities", cities);
+        model.addAttribute("travelClassType", TravelClassType.values());
         model.addAttribute("searchCriteria", new SearchCriteria());
         return "flightSearch";
     }

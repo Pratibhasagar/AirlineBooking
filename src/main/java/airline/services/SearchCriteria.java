@@ -1,19 +1,24 @@
 package airline.services;
 
+import airline.models.TravelClassType;
+
 public class SearchCriteria {
     private String source;
     private String destination;
-    private int numberOfPassengers;
+    private int numberOfPassengers = 1;
     private String date;
+    private TravelClassType travelClassType;
 
     public SearchCriteria() {
     }
 
-    public SearchCriteria(String source, String destination, int numberOfPassengers, String date) {
+    public SearchCriteria(String source, String destination, int numberOfPassengers,
+                          String date, TravelClassType travelClassType) {
         this.source = source;
         this.destination = destination;
         this.numberOfPassengers = numberOfPassengers;
         this.date = date;
+        this.travelClassType = travelClassType;
     }
 
     public void setSource(String source) {
@@ -48,5 +53,11 @@ public class SearchCriteria {
         return date;
     }
 
+    public TravelClassType getTravelClassType() {
+        return travelClassType;
+    }
 
+    public void setTravelClassType(TravelClassType travelClassType) {
+        this.travelClassType = travelClassType;
+    }
 }
