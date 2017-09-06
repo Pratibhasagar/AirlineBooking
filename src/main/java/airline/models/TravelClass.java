@@ -1,30 +1,22 @@
 package airline.models;
 
 public class TravelClass {
-    private TravelClassType type;
+    private TravelClassType travelClassType;
     private int totalSeats;
     private int availableSeats;
 
     public TravelClass(TravelClassType type, int totalSeats) {
-        this.type = type;
+        this.travelClassType = type;
         this.totalSeats = totalSeats;
         this.availableSeats = totalSeats;
     }
 
-    public TravelClassType getType() {
-        return type;
-    }
-
-    public void setType(TravelClassType type) {
-        this.type = type;
+    public TravelClassType getTravelClassType() {
+        return travelClassType;
     }
 
     public int getTotalSeats() {
         return totalSeats;
-    }
-
-    public void setTotalSeats(int totalSeats) {
-        this.totalSeats = totalSeats;
     }
 
     public int getAvailableSeats() {

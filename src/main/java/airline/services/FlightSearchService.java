@@ -22,8 +22,7 @@ public class FlightSearchService {
         availableFlights = new ArrayList<>();
 
         availableFlights = flightRepository.getFlights().stream()
-                .filter(sourceCriteriaMatches(searchCriteria.getSource()))
-                .filter(destinationCriteriaMatches(searchCriteria.getDestination()))
+                .filter(sourceAndDestinationCriteriaMatches(searchCriteria.getSource(), searchCriteria.getDestination()))
                 .filter(seatsCriteriaMatches(searchCriteria.getTravelClassType(), searchCriteria.getNumberOfPassengers()))
                 .filter(dateOfDepartureCriteriaMatches(searchCriteria.getDate()))
                 .collect(Collectors.toList());
@@ -34,19 +33,15 @@ public class FlightSearchService {
         if ("".equals(dateOfDeparture)) {
             return f -> !(ZonedDateTime.parse(f.getDateOfDeparture()).toLocalDate().isBefore(ZonedDateTime.now().toLocalDate()));
         } else {
-            return f -> dateOfDeparture.equals(ZonedDateTime.parse(f.getDateOfDeparture()).toLocalDate().toString());
+            return f -> f.travelsOnDate(dateOfDeparture);
         }
     }
 
     private static Predicate<Flight> seatsCriteriaMatches(TravelClassType travelClass, int requestedSeats) {
-        return f -> f.getAirplane().getAvailableSeatsForClass(travelClass) >= requestedSeats;
+        return f -> f.getAvailableSeatsForClass(travelClass) >= requestedSeats;
     }
 
-    private static Predicate<Flight> destinationCriteriaMatches(String destination) {
-        return f -> f.getDestination().equalsIgnoreCase(destination);
-    }
-
-    private static Predicate<Flight> sourceCriteriaMatches(String source) {
-        return f -> f.getSource().equalsIgnoreCase(source);
+    private static Predicate<Flight> sourceAndDestinationCriteriaMatches(String source, String destination) {
+        return f -> f.travelsBetweenLocations(source, destination);
     }
 }

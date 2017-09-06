@@ -1,56 +1,53 @@
 package airline.models;
 
+import java.time.ZonedDateTime;
+import java.util.Map;
+
 public class Flight {
     private String flightNumber;
     private String source;
     private String destination;
     private String dateOfDeparture;
     private Airplane airplane;
+    private Map<TravelClassType, TravelClass> travelClassMap;
 
-    public Flight(String flightNumber, String source, String destination,String date, Airplane airplane) {
+    public Flight(String flightNumber, String source, String destination, String date,
+                  Airplane airplane, Map<TravelClassType, TravelClass> travelClassMap) {
         this.flightNumber = flightNumber;
         this.source = source;
         this.destination = destination;
         this.dateOfDeparture = date;
         this.airplane = airplane;
+        this.travelClassMap = travelClassMap;
     }
 
-    public String getFlightNumber() {
-        return flightNumber;
+    public boolean travelsOnDate(String date) {
+        return date.equals(ZonedDateTime.parse(this.dateOfDeparture).toLocalDate().toString());
     }
 
-    public void setFlightNumber(String flightNumber) {
-        this.flightNumber = flightNumber;
+    public boolean travelsBetweenLocations(String source, String destination) {
+        return this.source.equalsIgnoreCase(source) && this.destination.equalsIgnoreCase(destination);
     }
+
+    public int getAvailableSeatsForClass(TravelClassType travelClassType) {
+        return travelClassMap.get(travelClassType).getAvailableSeats();
+    }
+
+    public String getFlightNumber() { return flightNumber; }
 
     public String getSource() {
         return source;
-    }
-
-    public void setSource(String source) {
-        this.source = source;
     }
 
     public String getDestination() {
         return destination;
     }
 
-    public void setDestination(String destination) {
-        this.destination = destination;
-    }
-
     public String getDateOfDeparture() {
         return dateOfDeparture;
     }
 
-    public void setDateOfDeparture(String datetime) {
-        this.dateOfDeparture = datetime;
-    }
-
     public Airplane getAirplane() {
         return airplane;
-    }
-    public void setAirplane(Airplane airplane) {
-        this.airplane = airplane;
     }
 }
