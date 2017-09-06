@@ -21,19 +21,25 @@ public class Flight {
         this.travelClassMap = travelClassMap;
     }
 
-    public boolean travelsOnDate(String date) {
-        return date.equals(ZonedDateTime.parse(this.dateOfDeparture).toLocalDate().toString());
+    public boolean startsAtSource(String source) {
+        return this.source.equalsIgnoreCase(source);
     }
 
-    public boolean travelsBetweenLocations(String source, String destination) {
-        return this.source.equalsIgnoreCase(source) && this.destination.equalsIgnoreCase(destination);
+    public boolean reachesDestination(String destination) {
+        return this.destination.equalsIgnoreCase(destination);
     }
 
     public int getAvailableSeatsForClass(TravelClassType travelClassType) {
         return travelClassMap.get(travelClassType).getAvailableSeats();
     }
 
-    public String getFlightNumber() { return flightNumber; }
+    public boolean travelsOnDate(String date) {
+        return date.equals(ZonedDateTime.parse(this.dateOfDeparture).toLocalDate().toString());
+    }
+
+    public String getFlightNumber() {
+        return flightNumber;
+    }
 
     public String getSource() {
         return source;

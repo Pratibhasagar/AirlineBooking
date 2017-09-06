@@ -22,7 +22,8 @@ public class FlightSearchService {
         availableFlights = new ArrayList<>();
 
         availableFlights = flightRepository.getFlights().stream()
-                .filter(sourceAndDestinationCriteriaMatches(searchCriteria.getSource(), searchCriteria.getDestination()))
+                .filter(sourceCriteriaMatches(searchCriteria.getSource()))
+                .filter(destinationCriteriaMatches(searchCriteria.getDestination()))
                 .filter(seatsCriteriaMatches(searchCriteria.getTravelClassType(), searchCriteria.getNumberOfPassengers()))
                 .filter(dateOfDepartureCriteriaMatches(searchCriteria.getDate()))
                 .collect(Collectors.toList());
@@ -30,18 +31,20 @@ public class FlightSearchService {
     }
 
     private static Predicate<Flight> dateOfDepartureCriteriaMatches(String dateOfDeparture) {
-        if ("".equals(dateOfDeparture)) {
+        if ("".equals(dateOfDeparture) || null == dateOfDeparture)
             return f -> !(ZonedDateTime.parse(f.getDateOfDeparture()).toLocalDate().isBefore(ZonedDateTime.now().toLocalDate()));
-        } else {
-            return f -> f.travelsOnDate(dateOfDeparture);
-        }
+        return f -> f.travelsOnDate(dateOfDeparture);
     }
 
     private static Predicate<Flight> seatsCriteriaMatches(TravelClassType travelClass, int requestedSeats) {
-        return f -> f.getAvailableSeatsForClass(travelClass) >= requestedSeats;
+        return f -> null == travelClass || f.getAvailableSeatsForClass(travelClass) >= requestedSeats;
     }
 
-    private static Predicate<Flight> sourceAndDestinationCriteriaMatches(String source, String destination) {
-        return f -> f.travelsBetweenLocations(source, destination);
+    private static Predicate<Flight> sourceCriteriaMatches(String source) {
+        return f -> null == source || "".equals(source) || f.startsAtSource(source);
+    }
+
+    private static Predicate<Flight> destinationCriteriaMatches(String destination) {
+        return f -> null == destination || "".equals(destination) || f.reachesDestination(destination);
     }
 }

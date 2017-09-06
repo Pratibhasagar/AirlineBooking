@@ -11,19 +11,7 @@ public class TravelClass {
         this.availableSeats = totalSeats;
     }
 
-    public TravelClassType getTravelClassType() {
-        return travelClassType;
-    }
-
-    public int getTotalSeats() {
-        return totalSeats;
-    }
-
     public int getAvailableSeats() {
         return availableSeats;
-    }
-
-    public void setAvailableSeats(int availableSeats) {
-        this.availableSeats = availableSeats;
     }
 }
