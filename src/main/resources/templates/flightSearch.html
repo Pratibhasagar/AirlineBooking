@@ -3,86 +3,93 @@
 <head>
     <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"/>
 </head>
 <body>
-<h2 th:text="'Welcome to TW Airlines'"/>
-
+<div class="container">
+<h4 class="text-center" th:text="'Welcome to ThoughtWorks Vapasi Airlines'"/>
+<br/>
+</div>
 <!--Input from the user-->
-<form method="post" action="#" th:action="@{/search}" th:object="${searchCriteria}">
-    <table>
-        <tr>
-            <td>
-                <p th:text="'Source: '"/>
-            </td>
-            <td>
-                <select title="Source" class="form-control" id="source" name="source" required="required"
-                        th:field="*{source}">
-                    <option value="">Select Source</option>
-                    <option th:each="city : ${cities}"
-                            th:value="${city.id}"
-                            th:text="${city.name}">
-                    </option>
+<div class="container">
+    <h5 th:text="'Lets search for some flights'"/>
+    <form method="post" action="#" th:action="@{/search}" th:object="${searchCriteria}">
+        <table class="table">
+            <tr>
+                <td>
+                    <p th:text="'Source: '"/>
+                </td>
+                <td>
+                    <select class="form-control" id="source" name="source" required="required"
+                            th:field="*{source}">
+                        <option value="">Select</option>
+                        <option th:each="city : ${cities}"
+                                th:value="${city.id}"
+                                th:text="${city.name}">
+                        </option>
 
-                </select>
-            </td>
-            <td>
-                <p th:text="'Destination: '"/>
-            </td>
-            <td>
-                <select class="form-control" id="destination" name="destination" required="required"
-                        th:field="*{destination}">
-                    <option value="">Select Destination</option>
-                    <option th:each="city : ${cities}"
-                            th:value="${city.id}"
-                            th:text="${city.name}"
-                    >
-                    </option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <p th:text="'Number Of Passengers'"/>
-            </td>
-            <td>
-                <input type="text" name="Number Of Passengers" min="1" required="required"
-                       th:field="*{numberOfPassengers}"/>
-            </td>
-            <td>
-                <p th:text="'Class of Travel'"/>
-            </td>
-            <td>
-                <select class="form-control" id="travelClassType" name="destination" required="required"
-                        th:field="*{travelClassType}">
-                    <option value="">Select Class of Travel</option>
-                    <option th:each="travelClass : ${T(airline.models.TravelClassType).values()}"
-                            th:value="${travelClass}"
-                            th:text="${travelClass}"
-                    >
-                    </option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <p th:text="'Departure On'"/>
-            </td>
-            <td>
-                <input id="date" type="date" th:field="*{date}"/>
-            </td>
-            <td>
-                <input type="submit" value="Submit"/>
-            </td>
+                    </select>
+                </td>
+                <td>
+                    <p th:text="'Destination: '"/>
+                </td>
+                <td>
+                    <select class="form-control" id="destination" name="destination" required="required"
+                            th:field="*{destination}">
+                        <option value="">Select</option>
+                        <option th:each="city : ${cities}"
+                                th:value="${city.id}"
+                                th:text="${city.name}"
+                        >
+                        </option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p th:text="'Number Of Passengers'"/>
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="Number Of Passengers" min="1" required="required"
+                           th:field="*{numberOfPassengers}"/>
+                </td>
+                <td>
+                    <p th:text="'Class of Travel'"/>
+                </td>
+                <td>
+                    <select class="form-control" id="travelClassType" name="destination" required="required"
+                            th:field="*{travelClassType}">
+                        <option value="">Select</option>
+                        <option th:each="travelClass : ${T(airline.models.TravelClassType).values()}"
+                                th:value="${travelClass}"
+                                th:text="${travelClass}"
+                        >
+                        </option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p th:text="'Departure On'"/>
+                </td>
+                <td>
+                    <input class="form-control" id="date" type="date" th:field="*{date}"/>
+                </td>
+                <td>
+                    <input type="submit" value="Submit"/>
+                </td>
 
-        </tr>
-    </table>
-</form>
-
+            </tr>
+        </table>
+    </form>
+</div>
 <!--Display the flight search results-->
-<div th:if="${foundResults} == true">
-    <h2 th:text="'Flight Search Results'"/>
-    <table border="1">
-        <thead>
+<br/>
+<div class="container" th:if="${foundResults} == true">
+    <h5 th:text="'Found some lovely flights for you'"/>
+    <table class="table table-hover">
+        <thead class="thead-inverse">
         <tr>
             <th>Source</th>
             <th>Destination</th>
@@ -103,8 +110,8 @@
         </tbody>
     </table>
 </div>
-<div th:if="${foundResults} == false">
-    <h2 th:text="'No Flights Found'"/>
+<div class="container" th:if="${foundResults} == false">
+    <h5 th:text="'Oopsie! No Flights Found'"/>
 </div>
 </body>
 </html>
