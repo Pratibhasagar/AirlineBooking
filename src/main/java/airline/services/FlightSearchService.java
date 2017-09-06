@@ -1,7 +1,7 @@
 package airline.services;
 
-import airline.models.TravelClassType;
 import airline.models.Flight;
+import airline.models.TravelClassType;
 import airline.repositories.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Service
 public class FlightSearchService {
@@ -17,39 +19,34 @@ public class FlightSearchService {
     FlightRepository flightRepository;
 
     public List<Flight> search(SearchCriteria searchCriteria) {
-        availableFlights = new ArrayList<Flight>();
+        availableFlights = new ArrayList<>();
 
-        for (Flight flight : flightRepository.getFlights()) {
-            if (sourceCriteriaMatches(searchCriteria.getSource(), flight) &&
-                    destinationCriteriaMatches(searchCriteria.getDestination(), flight) &&
-                    seatsCriteriaMatches(searchCriteria.getTravelClassType(), searchCriteria.getNumberOfPassengers(), flight) &&
-                    dateOfDepartureCriteriaMatches(searchCriteria.getDate(), flight)) {
-                availableFlights.add(flight);
-            }
-        }
+        availableFlights = flightRepository.getFlights().stream()
+                .filter(sourceCriteriaMatches(searchCriteria.getSource()))
+                .filter(destinationCriteriaMatches(searchCriteria.getDestination()))
+                .filter(seatsCriteriaMatches(searchCriteria.getTravelClassType(), searchCriteria.getNumberOfPassengers()))
+                .filter(dateOfDepartureCriteriaMatches(searchCriteria.getDate()))
+                .collect(Collectors.toList());
         return availableFlights;
     }
 
-    private boolean dateOfDepartureCriteriaMatches(String dateOfDeparture, Flight flight) {
-        boolean criteriaMatch = false;
-        if (!dateOfDeparture.isEmpty() &&
-                dateOfDeparture.equals(ZonedDateTime.parse(flight.getDateOfDeparture()).toLocalDate().toString())) {
-            criteriaMatch = true;
-        } else if (dateOfDeparture.isEmpty()) {
-            criteriaMatch = true;
+    private static Predicate<Flight> dateOfDepartureCriteriaMatches(String dateOfDeparture) {
+        if ("".equals(dateOfDeparture)) {
+            return f -> !(ZonedDateTime.parse(f.getDateOfDeparture()).toLocalDate().isBefore(ZonedDateTime.now().toLocalDate()));
+        } else {
+            return f -> dateOfDeparture.equals(ZonedDateTime.parse(f.getDateOfDeparture()).toLocalDate().toString());
         }
-        return criteriaMatch;
     }
 
-    private boolean seatsCriteriaMatches(TravelClassType travelClass, int requestedSeats, Flight flight) {
-        return (requestedSeats <= flight.getAirplane().getAvailableSeatsForClass(travelClass));
+    private static Predicate<Flight> seatsCriteriaMatches(TravelClassType travelClass, int requestedSeats) {
+        return f -> f.getAirplane().getAvailableSeatsForClass(travelClass) >= requestedSeats;
     }
 
-    private boolean destinationCriteriaMatches(String destination, Flight flight) {
-        return destination.equals(flight.getDestination());
+    private static Predicate<Flight> destinationCriteriaMatches(String destination) {
+        return f -> f.getDestination().equalsIgnoreCase(destination);
     }
 
-    private boolean sourceCriteriaMatches(String source, Flight flight) {
-        return source.equals(flight.getSource());
+    private static Predicate<Flight> sourceCriteriaMatches(String source) {
+        return f -> f.getSource().equalsIgnoreCase(source);
     }
 }
