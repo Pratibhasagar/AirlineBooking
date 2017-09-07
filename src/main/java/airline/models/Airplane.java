@@ -1,5 +1,8 @@
 package airline.models;
 
+/**
+ * @author: Pratibhasagar V.
+ */
 public class Airplane {
     private String manufacturer;
     private String modelNumber;
