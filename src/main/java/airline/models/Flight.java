@@ -11,12 +11,12 @@ public class Flight {
     private Airplane airplane;
     private Map<TravelClassType, TravelClass> travelClassMap;
 
-    public Flight(String flightNumber, String source, String destination, String date,
+    public Flight(String flightNumber, String source, String destination, String dateOfDeparture,
                   Airplane airplane, Map<TravelClassType, TravelClass> travelClassMap) {
         this.flightNumber = flightNumber;
         this.source = source;
         this.destination = destination;
-        this.dateOfDeparture = date;
+        this.dateOfDeparture = dateOfDeparture;
         this.airplane = airplane;
         this.travelClassMap = travelClassMap;
     }

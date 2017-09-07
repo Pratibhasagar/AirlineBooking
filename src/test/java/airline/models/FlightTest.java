@@ -6,8 +6,6 @@ import org.junit.Test;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.HashMap;
-import java.util.Map;
 
 public class FlightTest {
 
@@ -16,15 +14,16 @@ public class FlightTest {
     @Before
     public void setUp() throws Exception {
 
-        ZonedDateTime zdtInUTC = ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC"));
-        final Map<TravelClassType, TravelClass> travelClassMap1 = new HashMap<TravelClassType, TravelClass>();
-        travelClassMap1.put(TravelClassType.FIRST, new TravelClass(TravelClassType.FIRST, 8));
-        travelClassMap1.put(TravelClassType.BUSINESS, new TravelClass(TravelClassType.BUSINESS, 35));
-        travelClassMap1.put(TravelClassType.ECONOMY, new TravelClass(TravelClassType.ECONOMY, 195));
-        final Airplane airplane1 = new Airplane("Boeing", "777-200LR(77L)");
-
-        flight = new Flight("F1", "HYD", "BLR",
-                zdtInUTC.toString(), airplane1, travelClassMap1);
+        flight = new FlightBuilder().
+                withFlightNumber("F1")
+                .withSource("HYD")
+                .withDestination("BLR")
+                .withDateOfDeparture(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).toString())
+                .withAirplane("Boeing", "\"777-200LR(77L)")
+                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(TravelClassType.FIRST, 8))
+                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(TravelClassType.BUSINESS, 35))
+                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(TravelClassType.ECONOMY, 195))
+                .build();
     }
 
     @Test

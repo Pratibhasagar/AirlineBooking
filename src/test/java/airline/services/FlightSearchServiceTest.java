@@ -1,8 +1,7 @@
 package airline.services;
 
-
-import airline.models.Airplane;
 import airline.models.Flight;
+import airline.models.FlightBuilder;
 import airline.models.TravelClass;
 import airline.models.TravelClassType;
 import airline.repositories.FlightRepository;
@@ -18,7 +17,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(value = FlightSearchService.class)
@@ -27,6 +28,7 @@ public class FlightSearchServiceTest {
     private FlightSearchService flightSearchService;
     @MockBean
     private FlightRepository flightRepository;
+
     List<Flight> flightsInRepository;
     List<Flight> expectedFlightList;
     Flight flight1, flight2, flight3, flight4;
@@ -36,34 +38,46 @@ public class FlightSearchServiceTest {
     public void Setup() {
         searchCriteria.setNumberOfPassengers(1);
 
-        final Map<TravelClassType, TravelClass> travelClassMap1 = new HashMap<TravelClassType, TravelClass>();
-        travelClassMap1.put(TravelClassType.FIRST, new TravelClass(TravelClassType.FIRST, 8));
-        travelClassMap1.put(TravelClassType.BUSINESS, new TravelClass(TravelClassType.BUSINESS, 35));
-        travelClassMap1.put(TravelClassType.ECONOMY, new TravelClass(TravelClassType.ECONOMY, 195));
-        final Airplane airplane1 = new Airplane("Boeing", "777-200LR(77L)");
-
-        final Map<TravelClassType, TravelClass> travelClassMap2 = new HashMap<TravelClassType, TravelClass>();
-        travelClassMap2.put(TravelClassType.FIRST, new TravelClass(TravelClassType.FIRST, 0));
-        travelClassMap2.put(TravelClassType.BUSINESS, new TravelClass(TravelClassType.BUSINESS, 0));
-        travelClassMap2.put(TravelClassType.ECONOMY, new TravelClass(TravelClassType.ECONOMY, 144));
-        final Airplane airplane2 = new Airplane("Airbus", "A319 V2");
-
-        final Map<TravelClassType, TravelClass> travelClassMap3 = new HashMap<TravelClassType, TravelClass>();
-        travelClassMap3.put(TravelClassType.FIRST, new TravelClass(TravelClassType.FIRST, 0));
-        travelClassMap3.put(TravelClassType.BUSINESS, new TravelClass(TravelClassType.BUSINESS, 20));
-        travelClassMap3.put(TravelClassType.ECONOMY, new TravelClass(TravelClassType.ECONOMY, 152));
-        final Airplane airplane3 = new Airplane("Airbus", "A321");
-
-        ZonedDateTime zdtInUTC = ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC"));
-
-        flight1 = new Flight("F1", "HYD", "BLR",
-                zdtInUTC.toString(), airplane1, travelClassMap1);
-        flight2 = new Flight("F2", "HYD", "PUN",
-                zdtInUTC.plusDays(1).toString(), airplane2, travelClassMap2);
-        flight3 = new Flight("F3", "BLR", "PUN",
-                zdtInUTC.plusDays(1).toString(), airplane3, travelClassMap3);
-        flight4 = new Flight("F4", "HYD", "BLR",
-                zdtInUTC.plusDays(1).toString(), airplane1, travelClassMap1);
+        flight1 = new FlightBuilder()
+                .withFlightNumber("F1")
+                .withSource("HYD")
+                .withDestination("BLR")
+                .withDateOfDeparture(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).toString())
+                .withAirplane("Boeing", "777-200LR(77L)")
+                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(TravelClassType.FIRST, 8))
+                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(TravelClassType.BUSINESS, 35))
+                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(TravelClassType.ECONOMY, 195))
+                .build();
+        flight2 = new FlightBuilder()
+                .withFlightNumber("F2")
+                .withSource("HYD")
+                .withDestination("PUN")
+                .withDateOfDeparture(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).plusDays(1).toString())
+                .withAirplane("Airbus", "A319 V2")
+                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(TravelClassType.FIRST, 0))
+                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(TravelClassType.BUSINESS, 0))
+                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(TravelClassType.ECONOMY, 144))
+                .build();
+        flight3 = new FlightBuilder()
+                .withFlightNumber("F3")
+                .withSource("BLR")
+                .withDestination("PUN")
+                .withDateOfDeparture(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).plusDays(1).toString())
+                .withAirplane("Airbus", "A321")
+                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(TravelClassType.FIRST, 0))
+                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(TravelClassType.BUSINESS, 20))
+                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(TravelClassType.ECONOMY, 152))
+                .build();
+        flight4 = new FlightBuilder()
+                .withFlightNumber("F4")
+                .withSource("HYD")
+                .withDestination("BLR")
+                .withDateOfDeparture(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).plusDays(1).toString())
+                .withAirplane("Boeing", "777-200LR(77L)")
+                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(TravelClassType.FIRST, 8))
+                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(TravelClassType.BUSINESS, 35))
+                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(TravelClassType.ECONOMY, 195))
+                .build();
 
         flightsInRepository = new ArrayList<Flight>(Arrays.asList(flight1, flight2, flight3, flight4));
         Mockito.when(flightRepository.getFlights()).thenReturn(flightsInRepository);
@@ -79,14 +93,14 @@ public class FlightSearchServiceTest {
     }
 
     @Test
-    public void shouldReturnAllFlightsIfCriteriaNotSpecified(){
+    public void shouldReturnAllFlightsIfCriteriaNotSpecified() {
         expectedFlightList = new ArrayList<Flight>(Arrays.asList(flight1, flight2, flight3, flight4));
         List<Flight> actualResult = flightSearchService.search(searchCriteria);
         Assert.assertEquals(expectedFlightList, actualResult);
     }
 
     @Test
-    public void shouldReturnAllFlightsStartingFromHyd(){
+    public void shouldReturnAllFlightsStartingFromHyd() {
         expectedFlightList = new ArrayList<Flight>(Arrays.asList(flight1, flight2, flight4));
         searchCriteria.setSource("HYD");
         List<Flight> actualResult = flightSearchService.search(searchCriteria);
@@ -94,7 +108,7 @@ public class FlightSearchServiceTest {
     }
 
     @Test
-    public void shouldReturnAllFlightsReachingPUN(){
+    public void shouldReturnAllFlightsReachingPUN() {
         expectedFlightList = new ArrayList<Flight>(Arrays.asList(flight2, flight3));
         searchCriteria.setDestination("PUN");
         List<Flight> actualResult = flightSearchService.search(searchCriteria);
