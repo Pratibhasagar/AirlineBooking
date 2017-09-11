@@ -23,9 +23,10 @@ public class FlightTest {
                 .withDestination("BLR")
                 .withDateOfDeparture(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).toString())
                 .withAirplane("Boeing", "\"777-200LR(77L)")
-                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(TravelClassType.FIRST, 20000,8))
-                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(TravelClassType.BUSINESS, 13000,35))
-                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(TravelClassType.ECONOMY, 6000,195))
+                .withAirplane("Boeing", "777-200LR(77L)")
+                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(20000, 8))
+                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(13000, 35))
+                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(6000, 195))
                 .build();
     }
 
@@ -62,17 +63,17 @@ public class FlightTest {
 
     @Test
     public void shouldReturnAvailableSeatsForFirstClass() throws Exception {
-        Assert.assertEquals(8,flight.getAvailableSeatsForTravelClass(TravelClassType.FIRST));
+        Assert.assertEquals(8, flight.getAvailableSeatsForTravelClass(TravelClassType.FIRST));
     }
 
     @Test
     public void shouldReturnAvailableSeatsForBusinessClass() throws Exception {
-        Assert.assertEquals(35,flight.getAvailableSeatsForTravelClass(TravelClassType.BUSINESS));
+        Assert.assertEquals(35, flight.getAvailableSeatsForTravelClass(TravelClassType.BUSINESS));
     }
 
     @Test
     public void shouldReturnAvailableSeatsForEconomyClass() throws Exception {
-        Assert.assertEquals(195,flight.getAvailableSeatsForTravelClass(TravelClassType.ECONOMY));
+        Assert.assertEquals(195, flight.getAvailableSeatsForTravelClass(TravelClassType.ECONOMY));
     }
 
     @Test

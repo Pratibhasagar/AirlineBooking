@@ -46,9 +46,10 @@ public class FlightSearchServiceTest {
                 .withDestination("BLR")
                 .withDateOfDeparture(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).toString())
                 .withAirplane("Boeing", "777-200LR(77L)")
-                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(TravelClassType.FIRST, 20000,8))
-                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(TravelClassType.BUSINESS, 13000,35))
-                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(TravelClassType.ECONOMY, 6000,195))
+                .withAirplane("Boeing", "777-200LR(77L)")
+                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(20000, 8))
+                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(13000, 35))
+                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(6000, 195))
                 .build();
         flight2 = new FlightBuilder()
                 .withFlightNumber("F2")
@@ -56,9 +57,9 @@ public class FlightSearchServiceTest {
                 .withDestination("PUN")
                 .withDateOfDeparture(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).plusDays(1).toString())
                 .withAirplane("Airbus", "A319 V2")
-                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(TravelClassType.FIRST, 20000,8))
-                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(TravelClassType.BUSINESS, 13000,35))
-                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(TravelClassType.ECONOMY, 6000,195))
+                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(20000, 8))
+                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(13000, 35))
+                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(6000, 195))
                 .build();
         flight3 = new FlightBuilder()
                 .withFlightNumber("F3")
@@ -66,9 +67,9 @@ public class FlightSearchServiceTest {
                 .withDestination("PUN")
                 .withDateOfDeparture(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).plusDays(1).toString())
                 .withAirplane("Airbus", "A321")
-                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(TravelClassType.FIRST, 0,0))
-                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(TravelClassType.BUSINESS, 10000,20))
-                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(TravelClassType.ECONOMY, 5000,152))
+                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(0, 0))
+                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(10000, 20))
+                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(5000, 152))
                 .build();
         flight4 = new FlightBuilder()
                 .withFlightNumber("F4")
@@ -76,15 +77,14 @@ public class FlightSearchServiceTest {
                 .withDestination("BLR")
                 .withDateOfDeparture(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).plusDays(1).toString())
                 .withAirplane("Boeing", "777-200LR(77L)")
-                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(TravelClassType.FIRST, 20000,8))
-                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(TravelClassType.BUSINESS, 13000,35))
-                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(TravelClassType.ECONOMY, 6000,195))
+                .withAirplane("Boeing", "777-200LR(77L)")
+                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(20000, 8))
+                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(13000, 35))
+                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(6000, 195))
                 .build();
 
         flightsInRepository = new ArrayList<>(Arrays.asList(flight1, flight2, flight3, flight4));
         Mockito.when(flightRepository.getFlights()).thenReturn(flightsInRepository);
-
-
     }
 
     @Test
