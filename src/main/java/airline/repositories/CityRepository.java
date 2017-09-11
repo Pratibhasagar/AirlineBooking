@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public class CityRepository {
-    private static List<City> cities;
+    private List<City> cities;
 
     public CityRepository() {
         cities = new ArrayList<>();

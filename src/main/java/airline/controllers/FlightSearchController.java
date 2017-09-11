@@ -35,11 +35,11 @@ public class FlightSearchController {
 
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public String getFlights(@ModelAttribute(value = "searchCriteria") SearchCriteria searchCriteria, Model model) {
-        boolean foundResults = false;
+        boolean foundResults = true;
         List<SearchResult> matchedFlights = flightSearchService.search(searchCriteria);
         model.addAttribute("searchResults", matchedFlights);
-        if (matchedFlights.size() > 0) {
-            foundResults = true;
+        if (matchedFlights.isEmpty()) {
+            foundResults = false;
         }
         model.addAttribute("foundResults", foundResults);
         model.addAttribute("cities", cityRepository.getCities());

@@ -4,8 +4,8 @@ package airline.models;
  * @author: Pratibhasagar V.
  */
 public class City {
-    public String id;
-    public String name;
+    private String id;
+    private String name;
 
     public City(String id, String name){
         this.id = id;
