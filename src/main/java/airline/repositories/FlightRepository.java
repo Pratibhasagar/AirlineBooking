@@ -11,12 +11,16 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author: Pratibhasagar V.
+ */
+
 @Repository
 public class FlightRepository {
     private final List<Flight> flights;
 
     public FlightRepository() {
-        flights = new ArrayList<Flight>();
+        flights = new ArrayList<>();
         createDefaultFlights();
     }
 
@@ -28,9 +32,9 @@ public class FlightRepository {
                 .withDestination("BLR")
                 .withDateOfDeparture(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).toString())
                 .withAirplane("Boeing", "777-200LR(77L)")
-                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(TravelClassType.FIRST, 8))
-                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(TravelClassType.BUSINESS, 35))
-                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(TravelClassType.ECONOMY, 195))
+                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(TravelClassType.FIRST, 20000,8))
+                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(TravelClassType.BUSINESS, 13000,35))
+                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(TravelClassType.ECONOMY, 6000,195))
                 .build();
         final Flight flight2 = new FlightBuilder()
                 .withFlightNumber("F2")
@@ -38,9 +42,9 @@ public class FlightRepository {
                 .withDestination("PUN")
                 .withDateOfDeparture(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).plusDays(1).toString())
                 .withAirplane("Airbus", "A319 V2")
-                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(TravelClassType.FIRST, 0))
-                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(TravelClassType.BUSINESS, 0))
-                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(TravelClassType.ECONOMY, 144))
+                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(TravelClassType.FIRST, 0,0))
+                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(TravelClassType.BUSINESS, 0,0))
+                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(TravelClassType.ECONOMY, 4000,144))
                 .build();
         final Flight flight3 = new FlightBuilder()
                 .withFlightNumber("F3")
@@ -48,9 +52,9 @@ public class FlightRepository {
                 .withDestination("PUN")
                 .withDateOfDeparture(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).plusDays(1).toString())
                 .withAirplane("Airbus", "A321")
-                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(TravelClassType.FIRST, 0))
-                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(TravelClassType.BUSINESS, 20))
-                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(TravelClassType.ECONOMY, 152))
+                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(TravelClassType.FIRST, 0,0))
+                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(TravelClassType.BUSINESS, 10000,20))
+                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(TravelClassType.ECONOMY, 5000,152))
                 .build();
         final Flight flight4 = new FlightBuilder()
                 .withFlightNumber("F4")
@@ -58,9 +62,9 @@ public class FlightRepository {
                 .withDestination("BLR")
                 .withDateOfDeparture(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).plusDays(1).toString())
                 .withAirplane("Boeing", "777-200LR(77L)")
-                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(TravelClassType.FIRST, 8))
-                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(TravelClassType.BUSINESS, 35))
-                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(TravelClassType.ECONOMY, 195))
+                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(TravelClassType.FIRST, 20000,8))
+                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(TravelClassType.BUSINESS, 13000,35))
+                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(TravelClassType.ECONOMY, 6000,195))
                 .build();
 
         flights.add(flight1);

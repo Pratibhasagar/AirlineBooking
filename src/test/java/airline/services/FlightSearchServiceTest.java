@@ -1,9 +1,6 @@
 package airline.services;
 
-import airline.models.Flight;
-import airline.models.FlightBuilder;
-import airline.models.TravelClass;
-import airline.models.TravelClassType;
+import airline.models.*;
 import airline.repositories.FlightRepository;
 import org.junit.Assert;
 import org.junit.Before;
@@ -21,6 +18,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @author: Pratibhasagar V.
+ */
+
 @RunWith(SpringRunner.class)
 @WebMvcTest(value = FlightSearchService.class)
 public class FlightSearchServiceTest {
@@ -30,8 +31,9 @@ public class FlightSearchServiceTest {
     private FlightRepository flightRepository;
 
     List<Flight> flightsInRepository;
-    List<Flight> expectedFlightList;
+    List<SearchResult> expectedFlightList;
     Flight flight1, flight2, flight3, flight4;
+    SearchResult result1, result2, result3, result4;
     SearchCriteria searchCriteria = new SearchCriteria();
 
     @Before
@@ -44,9 +46,9 @@ public class FlightSearchServiceTest {
                 .withDestination("BLR")
                 .withDateOfDeparture(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).toString())
                 .withAirplane("Boeing", "777-200LR(77L)")
-                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(TravelClassType.FIRST, 8))
-                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(TravelClassType.BUSINESS, 35))
-                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(TravelClassType.ECONOMY, 195))
+                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(TravelClassType.FIRST, 20000,8))
+                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(TravelClassType.BUSINESS, 13000,35))
+                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(TravelClassType.ECONOMY, 6000,195))
                 .build();
         flight2 = new FlightBuilder()
                 .withFlightNumber("F2")
@@ -54,9 +56,9 @@ public class FlightSearchServiceTest {
                 .withDestination("PUN")
                 .withDateOfDeparture(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).plusDays(1).toString())
                 .withAirplane("Airbus", "A319 V2")
-                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(TravelClassType.FIRST, 0))
-                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(TravelClassType.BUSINESS, 0))
-                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(TravelClassType.ECONOMY, 144))
+                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(TravelClassType.FIRST, 20000,8))
+                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(TravelClassType.BUSINESS, 13000,35))
+                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(TravelClassType.ECONOMY, 6000,195))
                 .build();
         flight3 = new FlightBuilder()
                 .withFlightNumber("F3")
@@ -64,9 +66,9 @@ public class FlightSearchServiceTest {
                 .withDestination("PUN")
                 .withDateOfDeparture(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).plusDays(1).toString())
                 .withAirplane("Airbus", "A321")
-                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(TravelClassType.FIRST, 0))
-                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(TravelClassType.BUSINESS, 20))
-                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(TravelClassType.ECONOMY, 152))
+                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(TravelClassType.FIRST, 0,0))
+                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(TravelClassType.BUSINESS, 10000,20))
+                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(TravelClassType.ECONOMY, 5000,152))
                 .build();
         flight4 = new FlightBuilder()
                 .withFlightNumber("F4")
@@ -74,44 +76,57 @@ public class FlightSearchServiceTest {
                 .withDestination("BLR")
                 .withDateOfDeparture(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).plusDays(1).toString())
                 .withAirplane("Boeing", "777-200LR(77L)")
-                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(TravelClassType.FIRST, 8))
-                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(TravelClassType.BUSINESS, 35))
-                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(TravelClassType.ECONOMY, 195))
+                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(TravelClassType.FIRST, 20000,8))
+                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(TravelClassType.BUSINESS, 13000,35))
+                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(TravelClassType.ECONOMY, 6000,195))
                 .build();
 
-        flightsInRepository = new ArrayList<Flight>(Arrays.asList(flight1, flight2, flight3, flight4));
+        flightsInRepository = new ArrayList<>(Arrays.asList(flight1, flight2, flight3, flight4));
         Mockito.when(flightRepository.getFlights()).thenReturn(flightsInRepository);
+
+
     }
 
     @Test
-    public void searchFlightsBetweenHydAndBlr() {
-        expectedFlightList = new ArrayList<Flight>(Arrays.asList(flight1, flight4));
+    public void shouldReturnTwoFlightsBetweenHydAndBlr() {
+        result1 = new SearchResult(flight1, 6000);
+        result4 = new SearchResult(flight4, 6000);
+
+        expectedFlightList = new ArrayList<>(Arrays.asList(result1, result4));
         searchCriteria.setSource("HYD");
         searchCriteria.setDestination("BLR");
-        List<Flight> actualResult = flightSearchService.search(searchCriteria);
-        Assert.assertEquals(expectedFlightList, actualResult);
+        searchCriteria.setTravelClassType(TravelClassType.ECONOMY);
+        List<SearchResult> actualResult = flightSearchService.search(searchCriteria);
+        Assert.assertEquals(expectedFlightList.size(), actualResult.size());
     }
 
     @Test
     public void shouldReturnAllFlightsIfCriteriaNotSpecified() {
-        expectedFlightList = new ArrayList<Flight>(Arrays.asList(flight1, flight2, flight3, flight4));
-        List<Flight> actualResult = flightSearchService.search(searchCriteria);
-        Assert.assertEquals(expectedFlightList, actualResult);
+        result1 = new SearchResult(flight1, 6000);
+        result2 = new SearchResult(flight2, 6000);
+        result3 = new SearchResult(flight3, 5000);
+        result4 = new SearchResult(flight4, 6000);
+        expectedFlightList = new ArrayList<>(Arrays.asList(result1, result2, result3, result4));
+        searchCriteria.setTravelClassType(TravelClassType.ECONOMY);
+        List<SearchResult> actualResult = flightSearchService.search(searchCriteria);
+        Assert.assertEquals(expectedFlightList.size(), actualResult.size());
     }
 
     @Test
     public void shouldReturnAllFlightsStartingFromHyd() {
-        expectedFlightList = new ArrayList<Flight>(Arrays.asList(flight1, flight2, flight4));
+        expectedFlightList = new ArrayList<>(Arrays.asList(result1, result2, result4));
         searchCriteria.setSource("HYD");
-        List<Flight> actualResult = flightSearchService.search(searchCriteria);
-        Assert.assertEquals(expectedFlightList, actualResult);
+        searchCriteria.setTravelClassType(TravelClassType.ECONOMY);
+        List<SearchResult> actualResult = flightSearchService.search(searchCriteria);
+        Assert.assertEquals(expectedFlightList.size(), actualResult.size());
     }
 
     @Test
     public void shouldReturnAllFlightsReachingPUN() {
-        expectedFlightList = new ArrayList<Flight>(Arrays.asList(flight2, flight3));
+        expectedFlightList = new ArrayList<>(Arrays.asList(result2, result3));
         searchCriteria.setDestination("PUN");
-        List<Flight> actualResult = flightSearchService.search(searchCriteria);
-        Assert.assertEquals(expectedFlightList, actualResult);
+        searchCriteria.setTravelClassType(TravelClassType.ECONOMY);
+        List<SearchResult> actualResult = flightSearchService.search(searchCriteria);
+        Assert.assertEquals(expectedFlightList.size(), actualResult.size());
     }
 }

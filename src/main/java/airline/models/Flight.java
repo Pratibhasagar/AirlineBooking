@@ -3,6 +3,9 @@ package airline.models;
 import java.time.ZonedDateTime;
 import java.util.Map;
 
+/**
+ * @author: Pratibhasagar V.
+ */
 public class Flight {
     private String flightNumber;
     private String source;
@@ -29,8 +32,12 @@ public class Flight {
         return this.destination.equalsIgnoreCase(destination);
     }
 
-    public int getAvailableSeatsForClass(TravelClassType travelClassType) {
+    public int getAvailableSeatsForTravelClass(TravelClassType travelClassType) {
         return travelClassMap.get(travelClassType).getAvailableSeats();
+    }
+
+    public float getBasePriceForTravelClass(TravelClassType travelClassType) {
+        return travelClassMap.get(travelClassType).getBaseFare();
     }
 
     public boolean travelsOnDate(String date) {

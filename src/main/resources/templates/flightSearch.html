@@ -86,7 +86,7 @@
 </div>
 <!--Display the flight search results-->
 <br/>
-<div class="container" th:if="${foundResults} == true">
+<div class="container"  th:if="${foundResults} == true">
     <h5 th:text="'Found some lovely flights for you'"/>
     <table class="table table-hover">
         <thead class="thead-inverse">
@@ -96,16 +96,18 @@
             <th>Airplane</th>
             <th>Flight Id</th>
             <th>Departure Date</th>
+            <th>Price</th>
         </tr>
         </thead>
 
         <tbody>
-        <tr th:each="flight : ${searchResults}">
-            <td th:text="${flight.source}"/>
-            <td th:text="${flight.destination}"/>
-            <td th:text="${flight.getAirplane().getAirplaneInfo()}"/>
-            <td th:text="${flight.flightNumber}"/>
-            <td th:text="${T(java.time.ZonedDateTime).parse(flight.dateOfDeparture).toLocalDate().toString()}"/>
+        <tr th:each="searchResult : ${searchResults}">
+            <td th:text="${searchResult.flight.source}"/>
+            <td th:text="${searchResult.flight.destination}"/>
+            <td th:text="${searchResult.flight.airplane.getAirplaneInfo()}"/>
+            <td th:text="${searchResult.flight.flightNumber}"/>
+            <td th:text="${T(java.time.ZonedDateTime).parse(searchResult.flight.dateOfDeparture).toLocalDate().toString()}"/>
+            <td th:text="${searchResult.price}"/>
         </tr>
         </tbody>
     </table>

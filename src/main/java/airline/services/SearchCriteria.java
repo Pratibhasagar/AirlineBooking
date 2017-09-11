@@ -2,6 +2,9 @@ package airline.services;
 
 import airline.models.TravelClassType;
 
+/**
+ * @author: Pratibhasagar V.
+ */
 public class SearchCriteria {
     private String source;
     private String destination;
@@ -10,15 +13,6 @@ public class SearchCriteria {
     private TravelClassType travelClassType;
 
     public SearchCriteria() {
-    }
-
-    public SearchCriteria(String source, String destination, int numberOfPassengers,
-                          String date, TravelClassType travelClassType) {
-        this.source = source;
-        this.destination = destination;
-        this.numberOfPassengers = numberOfPassengers;
-        this.date = date;
-        this.travelClassType = travelClassType;
     }
 
     public void setSource(String source) {

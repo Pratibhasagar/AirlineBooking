@@ -3,6 +3,9 @@ package airline.models;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author: Pratibhasagar V.
+ */
 public class FlightBuilder {
     private String flightNumber;
     private String source;

@@ -7,6 +7,9 @@ import org.junit.Test;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
+/**
+ * @author: Pratibhasagar V.
+ */
 public class FlightTest {
 
     Flight flight;
@@ -20,9 +23,9 @@ public class FlightTest {
                 .withDestination("BLR")
                 .withDateOfDeparture(ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).toString())
                 .withAirplane("Boeing", "\"777-200LR(77L)")
-                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(TravelClassType.FIRST, 8))
-                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(TravelClassType.BUSINESS, 35))
-                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(TravelClassType.ECONOMY, 195))
+                .withTravelClassMap(TravelClassType.FIRST, new TravelClass(TravelClassType.FIRST, 20000,8))
+                .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(TravelClassType.BUSINESS, 13000,35))
+                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(TravelClassType.ECONOMY, 6000,195))
                 .build();
     }
 
@@ -59,16 +62,21 @@ public class FlightTest {
 
     @Test
     public void shouldReturnAvailableSeatsForFirstClass() throws Exception {
-        Assert.assertEquals(8,flight.getAvailableSeatsForClass(TravelClassType.FIRST));
+        Assert.assertEquals(8,flight.getAvailableSeatsForTravelClass(TravelClassType.FIRST));
     }
 
     @Test
     public void shouldReturnAvailableSeatsForBusinessClass() throws Exception {
-        Assert.assertEquals(35,flight.getAvailableSeatsForClass(TravelClassType.BUSINESS));
+        Assert.assertEquals(35,flight.getAvailableSeatsForTravelClass(TravelClassType.BUSINESS));
     }
 
     @Test
     public void shouldReturnAvailableSeatsForEconomyClass() throws Exception {
-        Assert.assertEquals(195,flight.getAvailableSeatsForClass(TravelClassType.ECONOMY));
+        Assert.assertEquals(195,flight.getAvailableSeatsForTravelClass(TravelClassType.ECONOMY));
+    }
+
+    @Test
+    public void shouldReturnCorrectBaseFareForEconomyClass() throws Exception {
+        Assert.assertEquals(6000, flight.getBasePriceForTravelClass(TravelClassType.ECONOMY), 0);
     }
 }

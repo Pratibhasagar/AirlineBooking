@@ -1,7 +1,6 @@
 package airline.controllers;
 
-import airline.models.City;
-import airline.models.Flight;
+import airline.models.SearchResult;
 import airline.models.TravelClassType;
 import airline.repositories.CityRepository;
 import airline.services.FlightSearchService;
@@ -28,8 +27,7 @@ public class FlightSearchController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String getCities(Model model) {
-        List<City> cities = cityRepository.getCities();
-        model.addAttribute("cities", cities);
+        model.addAttribute("cities", cityRepository.getCities());
         model.addAttribute("travelClassType", TravelClassType.values());
         model.addAttribute("searchCriteria", new SearchCriteria());
         return "flightSearch";
@@ -38,15 +36,13 @@ public class FlightSearchController {
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public String getFlights(@ModelAttribute(value = "searchCriteria") SearchCriteria searchCriteria, Model model) {
         boolean foundResults = false;
-        List<Flight> matchedFlights = flightSearchService.search(searchCriteria);
+        List<SearchResult> matchedFlights = flightSearchService.search(searchCriteria);
         model.addAttribute("searchResults", matchedFlights);
         if (matchedFlights.size() > 0) {
             foundResults = true;
         }
         model.addAttribute("foundResults", foundResults);
-
-        List<City> cities = cityRepository.getCities();
-        model.addAttribute("cities", cities);
+        model.addAttribute("cities", cityRepository.getCities());
         return "flightSearch";
     }
 }

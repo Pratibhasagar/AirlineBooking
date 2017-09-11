@@ -5,12 +5,16 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author: Pratibhasagar V.
+ */
+
 @Repository
 public class CityRepository {
     private static List<City> cities;
 
     public CityRepository() {
-        cities = new ArrayList<City>();
+        cities = new ArrayList<>();
         createDefaultCities();
     }
 
