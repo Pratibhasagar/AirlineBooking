@@ -1,7 +1,7 @@
 package airline.models;
 
 import java.time.ZonedDateTime;
-import java.util.EnumMap;
+import java.util.Map;
 
 /**
  * @author: Pratibhasagar V.
@@ -12,10 +12,10 @@ public class Flight {
     private String destination;
     private String dateOfDeparture;
     private Airplane airplane;
-    private EnumMap<TravelClassType, TravelClass> travelClassMap;
+    private Map<TravelClassType, TravelClass> travelClassMap;
 
     public Flight(String flightNumber, String source, String destination, String dateOfDeparture,
-                  Airplane airplane, EnumMap<TravelClassType, TravelClass> travelClassMap) {
+                  Airplane airplane, Map<TravelClassType, TravelClass> travelClassMap) {
         this.flightNumber = flightNumber;
         this.source = source;
         this.destination = destination;
