@@ -14,7 +14,7 @@
 <!--Input from the user-->
 <div class="container">
     <h5 th:text="'Lets search for some flights'"/>
-    <form method="post" action="#" th:action="@{/search}" th:object="${searchCriteria}">
+    <form method="post" th:action="@{/search}" th:object="${searchCriteria}">
         <table class="table">
             <tr>
                 <td>
