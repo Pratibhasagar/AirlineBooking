@@ -1,7 +1,6 @@
 package airline.models;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.EnumMap;
 
 /**
  * @author: Pratibhasagar V.
@@ -12,10 +11,10 @@ public class FlightBuilder {
     private String destination;
     private String dateOfDeparture;
     private Airplane airplane;
-    private Map<TravelClassType, TravelClass> travelClassMap;
+    private EnumMap<TravelClassType, TravelClass> travelClassMap;
 
     public FlightBuilder(){
-        this.travelClassMap = new HashMap<>();
+        this.travelClassMap = new EnumMap<>(TravelClassType.class);
     }
 
     public FlightBuilder withFlightNumber(String flightNumber) {
