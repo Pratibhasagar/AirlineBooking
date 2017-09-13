@@ -36,7 +36,15 @@ public class Flight {
         return travelClassMap.get(travelClassType).getAvailableSeats();
     }
 
-    public float getBasePriceForTravelClass(TravelClassType travelClassType) {
+    public int getBookedSeatsForTravelClass(TravelClassType travelClassType) {
+        return travelClassMap.get(travelClassType).getBookedSeats();
+    }
+
+    public int getTotalSeatsForTravelClass(TravelClassType travelClassType) {
+        return travelClassMap.get(travelClassType).getTotalSeats();
+    }
+
+    public float getBaseFareForTravelClass(TravelClassType travelClassType) {
         return travelClassMap.get(travelClassType).getBaseFare();
     }
 

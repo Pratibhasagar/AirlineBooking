@@ -78,6 +78,6 @@ public class FlightTest {
 
     @Test
     public void shouldReturnCorrectBaseFareForEconomyClass() throws Exception {
-        Assert.assertEquals(6000, flight.getBasePriceForTravelClass(TravelClassType.ECONOMY), 0);
+        Assert.assertEquals(6000, flight.getBaseFareForTravelClass(TravelClassType.ECONOMY), 0);
     }
 }

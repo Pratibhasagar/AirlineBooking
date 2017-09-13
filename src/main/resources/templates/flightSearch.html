@@ -107,7 +107,7 @@
             <td th:text="${searchResult.flight.airplane.getAirplaneInfo()}"/>
             <td th:text="${searchResult.flight.flightNumber}"/>
             <td th:text="${T(java.time.ZonedDateTime).parse(searchResult.flight.dateOfDeparture).toLocalDate().toString()}"/>
-            <td th:text="${searchResult.price}"/>
+            <td th:text="${#numbers.formatDecimal(searchResult.price, 0, 2)}"/>
         </tr>
         </tbody>
     </table>

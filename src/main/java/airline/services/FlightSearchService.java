@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -22,6 +21,8 @@ public class FlightSearchService {
 
     @Autowired
     FlightRepository flightRepository;
+    @Autowired
+    FlightFareService flightFareService;
 
     public List<SearchResult> search(SearchCriteria searchCriteria) {
         List<Flight> availableFlights = flightRepository.getFlights().stream()
@@ -30,21 +31,7 @@ public class FlightSearchService {
                 .filter(seatsCriteriaMatches(searchCriteria.getTravelClassType(), searchCriteria.getNumberOfPassengers()))
                 .filter(dateOfDepartureCriteriaMatches(searchCriteria.getDate()))
                 .collect(Collectors.toList());
-        return getTotalFare(availableFlights, searchCriteria);
-    }
-
-    private List<SearchResult> getTotalFare(List<Flight> flights, SearchCriteria searchCriteria) {
-        List<SearchResult> searchResultList = new ArrayList<>();
-        float basePrice;
-
-        for(Flight flight : flights) {
-            SearchResult searchResult = new SearchResult();
-            searchResult.setFlight(flight);
-            basePrice = searchResult.getFlight().getBasePriceForTravelClass(searchCriteria.getTravelClassType());
-            searchResult.setPrice( basePrice * searchCriteria.getNumberOfPassengers());
-            searchResultList.add(searchResult);
-        }
-        return searchResultList;
+        return flightFareService.getNetPriceForAllFlights(availableFlights, searchCriteria);
     }
 
     private static Predicate<Flight> dateOfDepartureCriteriaMatches(String dateOfDeparture) {

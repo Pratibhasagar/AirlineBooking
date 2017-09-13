@@ -34,7 +34,7 @@ public class FlightRepository {
                 .withAirplane("Boeing", "777-200LR(77L)")
                 .withTravelClassMap(TravelClassType.FIRST, new TravelClass(20000, 8))
                 .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(13000, 35))
-                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(6000, 195))
+                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(6000, 195, 40))
                 .build();
         final Flight flight2 = new FlightBuilder()
                 .withFlightNumber("F2")
@@ -64,7 +64,7 @@ public class FlightRepository {
                 .withAirplane("Boeing", "777-200LR(77L)")
                 .withTravelClassMap(TravelClassType.FIRST, new TravelClass(20000, 8))
                 .withTravelClassMap(TravelClassType.BUSINESS, new TravelClass(13000, 35))
-                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(6000, 195))
+                .withTravelClassMap(TravelClassType.ECONOMY, new TravelClass(6000, 195, 40))
                 .build();
 
         flights.add(flight1);
