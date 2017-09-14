@@ -16,13 +16,13 @@ import java.util.List;
 public class FlightFareService {
 
     // Each SLAB represents a seat-range with ending limit
-    private final float ECONOMY_FIRST_SLAB_SEATS_LIMIT = 0.40f;
-    private final float ECONOMY_SECOND_SLAB_SEATS_LIMIT = 0.90f;
-    private final float ECONOMY_THIRD_SLAB_SEATS_LIMIT = 1;
+    private static final float ECONOMY_FIRST_SLAB_SEATS_LIMIT = 0.40f;
+    private static final float ECONOMY_SECOND_SLAB_SEATS_LIMIT = 0.90f;
+    private static final float ECONOMY_THIRD_SLAB_SEATS_LIMIT = 1;
     // Each SLAB has a different pricing strategy
-    private final float ECONOMY_FIRST_SLAB_PRICE_MULTIPLIER = 1;
-    private final float ECONOMY_SECOND_SLAB_PRICE_MULTIPLIER = 1.30f;
-    private final float ECONOMY_THIRD_SLAB_PRICE_MULTIPLIER = 1.60f;
+    private static final float ECONOMY_FIRST_SLAB_PRICE_MULTIPLIER = 1;
+    private static final float ECONOMY_SECOND_SLAB_PRICE_MULTIPLIER = 1.30f;
+    private static final float ECONOMY_THIRD_SLAB_PRICE_MULTIPLIER = 1.60f;
 
     public List<SearchResult> getNetPriceForAllFlights(List<Flight> flights, SearchCriteria searchCriteria) {
         List<SearchResult> searchResultList = new ArrayList<>();
