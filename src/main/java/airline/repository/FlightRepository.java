@@ -1,9 +1,9 @@
-package airline.repositories;
+package airline.repository;
 
-import airline.models.Flight;
-import airline.models.FlightBuilder;
-import airline.models.TravelClass;
-import airline.models.TravelClassType;
+import airline.model.Flight;
+import airline.model.FlightBuilder;
+import airline.model.TravelClass;
+import airline.model.TravelClassType;
 import org.springframework.stereotype.Repository;
 
 import java.time.ZoneId;

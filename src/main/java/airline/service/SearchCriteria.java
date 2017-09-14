@@ -1,6 +1,6 @@
-package airline.services;
+package airline.service;
 
-import airline.models.TravelClassType;
+import airline.model.TravelClassType;
 
 /**
  * @author: Pratibhasagar V.

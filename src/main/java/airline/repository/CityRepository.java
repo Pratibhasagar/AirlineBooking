@@ -1,5 +1,5 @@
-package airline.repositories;
-import airline.models.City;
+package airline.repository;
+import airline.model.City;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;

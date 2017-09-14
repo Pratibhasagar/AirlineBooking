@@ -1,10 +1,10 @@
-package airline.controllers;
+package airline.controller;
 
-import airline.models.SearchResult;
-import airline.models.TravelClassType;
-import airline.repositories.CityRepository;
-import airline.services.FlightSearchService;
-import airline.services.SearchCriteria;
+import airline.model.SearchResult;
+import airline.model.TravelClassType;
+import airline.repository.CityRepository;
+import airline.service.FlightSearchService;
+import airline.service.SearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

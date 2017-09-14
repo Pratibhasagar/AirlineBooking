@@ -1,8 +1,8 @@
-package airline.services;
+package airline.service;
 
-import airline.models.Flight;
-import airline.models.SearchResult;
-import airline.models.TravelClassType;
+import airline.model.Flight;
+import airline.model.SearchResult;
+import airline.model.TravelClassType;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

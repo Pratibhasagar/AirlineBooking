@@ -1,4 +1,4 @@
-package airline.repositories;
+package airline.repository;
 
 import org.junit.Assert;
 import org.junit.Before;

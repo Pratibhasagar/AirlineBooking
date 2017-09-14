@@ -61,7 +61,7 @@
                     <select class="form-control" id="travelClassType" name="destination" required="required"
                             th:field="*{travelClassType}">
                         <option value="">Select</option>
-                        <option th:each="travelClass : ${T(airline.models.TravelClassType).values()}"
+                        <option th:each="travelClass : ${T(airline.model.TravelClassType).values()}"
                                 th:value="${travelClass}"
                                 th:text="${travelClass}"
                         >

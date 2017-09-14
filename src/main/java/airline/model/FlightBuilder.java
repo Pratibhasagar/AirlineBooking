@@ -1,4 +1,4 @@
-package airline.models;
+package airline.model;
 
 import java.util.EnumMap;
 import java.util.Map;

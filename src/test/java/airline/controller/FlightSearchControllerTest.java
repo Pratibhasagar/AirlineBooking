@@ -1,8 +1,8 @@
-package airline.controllers;
+package airline.controller;
 
 import airline.AirlineBookingApp;
-import airline.models.City;
-import airline.repositories.CityRepository;
+import airline.model.City;
+import airline.repository.CityRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

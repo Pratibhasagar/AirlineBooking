@@ -1,4 +1,4 @@
-package airline.models;
+package airline.model;
 
 /**
  * @author: Pratibhasagar V.

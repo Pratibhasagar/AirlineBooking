@@ -1,7 +1,7 @@
-package airline.services;
+package airline.service;
 
-import airline.models.*;
-import airline.repositories.FlightRepository;
+import airline.model.*;
+import airline.repository.FlightRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

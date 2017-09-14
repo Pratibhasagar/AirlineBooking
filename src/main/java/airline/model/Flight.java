@@ -1,4 +1,4 @@
-package airline.models;
+package airline.model;
 
 import java.time.ZonedDateTime;
 import java.util.Map;
