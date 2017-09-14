@@ -78,6 +78,16 @@ public class FlightFareService {
     }
 
     private float applyPricingStrategyForBusinessClass(Flight flight) {
+        LocalDate todayLocalDate =
+                ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).toLocalDate();
+        LocalDate dateWhenFlightOpensForBooking =
+                ZonedDateTime.parse(flight.getDateOfDeparture()).toLocalDate().minusWeeks(4);
+
+        // Check if Flight is opened for booking
+        if(todayLocalDate.isBefore(dateWhenFlightOpensForBooking)){
+            return 0;
+        }
+
         DayOfWeek dayOfTravel = ZonedDateTime.parse(flight.getDateOfDeparture()).toLocalDate().getDayOfWeek();
         float priceMultiplier = 0;
         switch (dayOfTravel) {
