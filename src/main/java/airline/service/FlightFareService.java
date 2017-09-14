@@ -5,9 +5,12 @@ import airline.model.TravelClassType;
 import airline.viewbean.SearchCriteria;
 import airline.viewbean.SearchResult;
 import org.springframework.stereotype.Service;
-
+import java.time.DayOfWeek;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import static java.time.DayOfWeek.*;
 
 /**
  * @author: Pratibhasagar V.
@@ -23,6 +26,8 @@ public class FlightFareService {
     private static final float ECONOMY_FIRST_SLAB_PRICE_MULTIPLIER = 1;
     private static final float ECONOMY_SECOND_SLAB_PRICE_MULTIPLIER = 1.30f;
     private static final float ECONOMY_THIRD_SLAB_PRICE_MULTIPLIER = 1.60f;
+    private static final float BUSINESS_FIRST_SLAB_PRICE_MULTIPLIER = 1;
+    private static final float BUSINESS_SECOND_SLAB_PRICE_MULTIPLIER = 1.40f;
 
     public List<SearchResult> getNetPriceForAllFlights(List<Flight> flights, SearchCriteria searchCriteria) {
         List<SearchResult> searchResultList = new ArrayList<>();
@@ -68,7 +73,22 @@ public class FlightFareService {
     }
 
     private float applyPricingStrategyForBusinessClass(Flight flight) {
-        return flight.getBaseFareForTravelClass(TravelClassType.BUSINESS);
+        DayOfWeek dayOfTravel = ZonedDateTime.parse(flight.getDateOfDeparture()).toLocalDate().getDayOfWeek();
+        float priceMultiplier = 0;
+        switch (dayOfTravel) {
+            case TUESDAY:
+            case WEDNESDAY:
+            case THURSDAY:
+            case SATURDAY:
+                priceMultiplier = BUSINESS_FIRST_SLAB_PRICE_MULTIPLIER;
+                break;
+            case MONDAY:
+            case FRIDAY:
+            case SUNDAY:
+                priceMultiplier = BUSINESS_SECOND_SLAB_PRICE_MULTIPLIER;
+                break;
+        }
+        return priceMultiplier * flight.getBaseFareForTravelClass(TravelClassType.BUSINESS);
     }
 
     private float applyPricingStrategyForFirstClass(Flight flight) {
