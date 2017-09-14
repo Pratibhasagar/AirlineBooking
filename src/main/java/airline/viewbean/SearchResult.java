@@ -1,4 +1,6 @@
-package airline.model;
+package airline.viewbean;
+
+import airline.model.Flight;
 
 /**
  * @author: Pratibhasagar V.

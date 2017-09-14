@@ -2,6 +2,8 @@ package airline.service;
 
 import airline.model.*;
 import airline.repository.FlightRepository;
+import airline.viewbean.SearchCriteria;
+import airline.viewbean.SearchResult;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

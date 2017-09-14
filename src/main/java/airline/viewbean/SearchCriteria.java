@@ -1,4 +1,4 @@
-package airline.service;
+package airline.viewbean;
 
 import airline.model.TravelClassType;
 

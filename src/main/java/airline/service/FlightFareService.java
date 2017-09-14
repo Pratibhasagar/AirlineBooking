@@ -1,8 +1,9 @@
 package airline.service;
 
 import airline.model.Flight;
-import airline.model.SearchResult;
 import airline.model.TravelClassType;
+import airline.viewbean.SearchCriteria;
+import airline.viewbean.SearchResult;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
