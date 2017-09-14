@@ -6,6 +6,7 @@ import airline.viewbean.SearchCriteria;
 import airline.viewbean.SearchResult;
 import org.springframework.stereotype.Service;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class FlightFareService {
     private static final float ECONOMY_THIRD_SLAB_PRICE_MULTIPLIER = 1.60f;
     private static final float BUSINESS_FIRST_SLAB_PRICE_MULTIPLIER = 1;
     private static final float BUSINESS_SECOND_SLAB_PRICE_MULTIPLIER = 1.40f;
+    private static final float FIRST_CLASS_PRICE_MULTIPLIER = 0.10f;
 
     public List<SearchResult> getNetPriceForAllFlights(List<Flight> flights, SearchCriteria searchCriteria) {
         List<SearchResult> searchResultList = new ArrayList<>();
@@ -35,8 +37,11 @@ public class FlightFareService {
 
         for (Flight flight : flights) {
             netPrice = getNetPriceForFlight(flight, searchCriteria);
-            SearchResult searchResult = new SearchResult(flight, netPrice);
-            searchResultList.add(searchResult);
+            // If pricing strategy don't comply, the flight would not be shown
+            if(netPrice != 0) {
+                SearchResult searchResult = new SearchResult(flight, netPrice);
+                searchResultList.add(searchResult);
+            }
         }
         return searchResultList;
     }
@@ -92,6 +97,23 @@ public class FlightFareService {
     }
 
     private float applyPricingStrategyForFirstClass(Flight flight) {
-        return flight.getBaseFareForTravelClass(TravelClassType.FIRST);
+        float priceMultiplier = 0;
+        LocalDate todayLocalDate =
+                ZonedDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("UTC")).toLocalDate();
+        LocalDate dateWhenFlightOpensForBooking =
+                ZonedDateTime.parse(flight.getDateOfDeparture()).toLocalDate().minusDays(10);
+        long daysSinceFlightOpenedForBooking = 0;
+
+        // Check if Flight is opened for booking
+        if(todayLocalDate.isBefore(dateWhenFlightOpensForBooking)){
+            return 0;
+        }
+        daysSinceFlightOpenedForBooking = todayLocalDate.toEpochDay() - dateWhenFlightOpensForBooking.toEpochDay();
+        if(daysSinceFlightOpenedForBooking == 0) {
+            priceMultiplier = 1;
+        } else {
+            priceMultiplier = daysSinceFlightOpenedForBooking * FIRST_CLASS_PRICE_MULTIPLIER;
+        }
+        return priceMultiplier * flight.getBaseFareForTravelClass(TravelClassType.FIRST);
     }
 }
